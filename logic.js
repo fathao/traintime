@@ -29,8 +29,10 @@
 
                 var trainName = $("#name-input").val().trim();
                 var destination = $("#destination-input").val().trim();
-                // var firstTrainTimeInput = moment($("#time-input").val().trim(), "hh:mm").subtract(1, "years").format("X");;
+                // var firstTrainTimeInput = moment($("#time-input").val().trim(), "hh:mm");
                 var firstTrainTimeInput = $("#time-input").val().trim();
+
+                var firstTrainTimeConverted = moment(firstTrainTimeInput, "hh:mm").subtract(1, "years");
                 var frequencyInput = $("#frequency-input").val().trim(),
 
                     //this is why my earlier activities were not working bcause i did not have a temp holder.
@@ -68,16 +70,16 @@
                 //these are firebase inputs...
                 var trainName = childSnapshot.val().name;
                 var destination = childSnapshot.val().destination;
-                var firstTrainTimeInput = childSnapshot.val().firstTrainTimeInput;
+                var firstTrainTimeConverted = childSnapshot.val().firstTrainTimeConverted;
                 var frequency = childSnapshot.val().frequency;
 
                 console.log(trainName);
                 console.log(destination);
-                console.log(firstTrainTimeInput);
+                // console.log(firstTrainTimeInput);
                 console.log(frequency);
                 //make sure they have something inside
 
-                var diffTime = moment().diff(firstTrainTimeInput, "minutes");
+                var diffTime = moment().diff(moment(firstTrainTimeConverted), "minutes");
                 var timeRemainder = parseInt(diffTime) % parseInt(frequency);
                 var minutes = parseInt(frequency) - parseInt(timeRemainder);
 
